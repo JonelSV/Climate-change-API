@@ -4,4 +4,12 @@
 // npm i axios (promise-based, http requests)
 
 const PORT = 8000;
+const express = require('express')
+const axios = require('axios')
 
+
+// to call express package functions and start new express application
+const app = express()
+
+// use callback on port and console log portnum
+app.listen(PORT, () => console.log(`Server is running on ${PORT}`))
