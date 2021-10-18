@@ -11,6 +11,8 @@ const cheerio = require('cheerio')
 // to call express package functions and start new express application
 const app = express()
 
+// add base to nespapers objects because a tags on the telegraph results in broken api
+
 const newspapers = [
     {
         name: 'thetimes',
@@ -31,7 +33,7 @@ const newspapers = [
 const articles = []
 
 newspapers.forEach(newspapers => {
-    axios.get(newspaper.address)
+    axios.get(newspapers.address)
         .then((response) => {
             const html = response.data
             // console.log(html)
@@ -44,7 +46,7 @@ newspapers.forEach(newspapers => {
                 articles.push({
                     title,
                     url,
-                    source: newspaper.name,
+                    source: newspapers.name,
                 })
             })
 
@@ -61,7 +63,7 @@ app.get('/', (req,res) => {
 // same as above, but this time, instead of homepage, when /news is accessed, run axios to scrape chosen webiste
 // create holder (html)for response from promise axios
 
-app.get('/news', (req,res) => {
+// app.get('/news', (req,res) => {
     
     // axios.get('https://www.theguardian.com/environment/climate-crisis')
     //     .then((response) => {
@@ -80,7 +82,16 @@ app.get('/news', (req,res) => {
 
     //         res.json(articles)
     //     }).catch((err) => console.log(err))
+    // })
+
+
+// New app.get that will return the articles array this time
+
+    app.get('/news', (req, res) => {
+        res.json(articles)
     })
+
+
 
 // use callback on port and console log portnum
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`))
