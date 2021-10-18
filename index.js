@@ -30,6 +30,15 @@ const newspapers = [
 ]
 const articles = []
 
+newspapers.forEach(newspapers => {
+    axios.get(newspaper.address)
+        .then((response) => {
+            const html = response.data
+            // console.log(html)
+            const $ = cheerio.load(html)
+        })
+})
+
 // routing, pass a path '/', request response, res.json to show welcom msg on localhost 8000
 app.get('/', (req,res) => {
     res.json('Welcome to my climate change news API')
@@ -41,23 +50,23 @@ app.get('/', (req,res) => {
 
 app.get('/news', (req,res) => {
     
-    axios.get('https://www.theguardian.com/environment/climate-crisis')
-        .then((response) => {
-            const html = response.data
-            // console.log(html)
-            const $ = cheerio.load(html)
+    // axios.get('https://www.theguardian.com/environment/climate-crisis')
+    //     .then((response) => {
+    //         const html = response.data
+    //         // console.log(html)
+    //         const $ = cheerio.load(html)
 
-            $('a:contains("climate")', html).each(function () {
-                const title = $(this).text()
-                const url = $(this).attr('href')
-                articles.push({
-                    title,
-                    url,
-                })
-            })
+    //         $('a:contains("climate")', html).each(function () {
+    //             const title = $(this).text()
+    //             const url = $(this).attr('href')
+    //             articles.push({
+    //                 title,
+    //                 url,
+    //             })
+    //         })
 
-            res.json(articles)
-        }).catch((err) => console.log(err))
+    //         res.json(articles)
+    //     }).catch((err) => console.log(err))
     })
 
 // use callback on port and console log portnum
