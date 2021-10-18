@@ -12,20 +12,23 @@ const cheerio = require('cheerio')
 const app = express()
 
 // add base to nespapers objects because a tags on the telegraph results in broken api
+// then add on newspapers.push the newspaper.base + url
 
 const newspapers = [
     {
         name: 'thetimes',
         address: 'https://www.thetimes.co.uk/environment/climate-change',
+        base: '',
     },
     {
         name: 'guardian',
         address: 'https://www.theguardian.co.uk/environment/climate-crisis',
-
+        base: '',
     },
     {
         name: 'telegraph',
         address: 'https://www.telegraph.co.uk/climate-change',
+        base: 'https://www.telegraph.co.uk/'
 
     },
 
@@ -45,7 +48,7 @@ newspapers.forEach(newspapers => {
 
                 articles.push({
                     title,
-                    url,
+                    url: newspapers.base + url,
                     source: newspapers.name,
                 })
             })
