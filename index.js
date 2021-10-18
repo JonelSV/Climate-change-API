@@ -36,6 +36,19 @@ newspapers.forEach(newspapers => {
             const html = response.data
             // console.log(html)
             const $ = cheerio.load(html)
+
+            $('a:contains("climate")', html).each(function () {
+                const title = $(this).text()
+                const url = $(this).attr('href')
+
+                articles.push({
+                    title,
+                    url,
+                    source: newspaper.name,
+                })
+            })
+
+
         })
 })
 
