@@ -103,7 +103,8 @@ app.get('/', (req,res) => {
         // console.log(req.params.newspaperId)
 
         const newspaperId = req.params.newspaperId
-        const newspaperAddress = newspapers.filter(newspaper => newspaper.name == newspaperId)[0].address
+        const newspaperAddress = newspapers.filter(newspapers => newspapers.name == newspaperId)[0].address
+        const newspaperBase = newspapers.filter(newspapers => newspapers.name == newspaperId)[0].base
         axios.get(newspaperAddress)
             .then((response) => {
                 const html = response.data
@@ -111,9 +112,18 @@ app.get('/', (req,res) => {
                 const specificArticles = []
 
                 $('a: contains("climate")', html).each (function () {
-                    $(this).text()
+                    const title = $(this).text()
+                    const url = $(this).attr('html')
+                    specificArticles.push({
+                        title,
+                        url: newspaperBase + url,
+                        source: newspaperId,
+                    })
                 })
-            })
+                res.json(specificArticles)
+            }).catch((err) =>{
+                console.log(err)
+            }) 
     })
 
 
