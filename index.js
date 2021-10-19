@@ -67,33 +67,33 @@ app.get('/', (req,res) => {
 // same as above, but this time, instead of homepage, when /news is accessed, run axios to scrape chosen webiste
 // create holder (html)for response from promise axios
 
-// app.get('/news', (req,res) => {
+app.get('/news', (req,res) => {
     
-    // axios.get('https://www.theguardian.com/environment/climate-crisis')
-    //     .then((response) => {
-    //         const html = response.data
-    //         // console.log(html)
-    //         const $ = cheerio.load(html)
+    axios.get('https://www.theguardian.com/environment/climate-crisis')
+        .then((response) => {
+            const html = response.data
+            // console.log(html)
+            const $ = cheerio.load(html)
 
-    //         $('a:contains("climate")', html).each(function () {
-    //             const title = $(this).text()
-    //             const url = $(this).attr('href')
-    //             articles.push({
-    //                 title,
-    //                 url,
-    //             })
-    //         })
+            $('a:contains("climate")', html).each(function () {
+                const title = $(this).text()
+                const url = $(this).attr('href')
+                articles.push({
+                    title,
+                    url,
+                })
+            })
 
-    //         res.json(articles)
-    //     }).catch((err) => console.log(err))
-    // })
+            res.json(articles)
+        }).catch((err) => console.log(err))
+    })
 
 
 // New app.get that will return the articles array this time
 
-    app.get('/news', (req, res) => {
-        res.json(articles)
-    })
+    // app.get('/news', (req, res) => {
+    //     res.json(articles)
+    // })
 
 
 // Add new call and now just scraping off one news article. Add : after news followed by newspaper ID , async
