@@ -99,25 +99,25 @@ app.get('/', (req,res) => {
 // Add new call and now just scraping off one news article. Add : after news followed by newspaper ID , async
 // create variable for newspaper ID to hold req.params.newsID. 
 // filter throught the newspapers array and return newspaper if it is equal to the newspaperID
-    app.get('news/:newspaperId', async (req, res) => {
+    app.get('news/:newspaperId',(req, res) => {
         // console.log(req.params.newspaperId)
 
         const newspaperId = req.params.newspaperId
-        const newspaperAddress = newspapers.filter(newspapers => newspapers.name == newspaperId)[0].address
-        const newspaperBase = newspapers.filter(newspapers => newspapers.name == newspaperId)[0].base
+        const newspaperAddress = newspapers.filter(newspaper => newspaper.name == newspaperId)[0].address
+        const newspaperBase = newspapers.filter(newspaper => newspaper.name == newspaperId)[0].base
         axios.get(newspaperAddress)
-            .then((response) => {
+            .then(response => {
                 const html = response.data
                 const $ = cheerio.load(html)
                 const specificArticles = []
 
-                $('a: contains("climate")', html).each (function () {
+                $('a:contains("climate")', html).each (function () {
                     const title = $(this).text()
-                    const url = $(this).attr('html')
+                    const url = $(this).attr('href')
                     specificArticles.push({
                         title,
                         url: newspaperBase + url,
-                        source: newspaperId,
+                        source: newspaperId
                     })
                 })
                 res.json(specificArticles)
