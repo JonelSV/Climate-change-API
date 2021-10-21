@@ -29,9 +29,9 @@ const newspapers = [
     {
         name: 'telegraph',
         address: 'https://www.telegraph.co.uk/climate-change',
-        base: 'https://www.telegraph.co.uk/'
-
+        base: 'https://www.telegraph.co.uk/',
     },
+    
 
 ]
 const articles = []
